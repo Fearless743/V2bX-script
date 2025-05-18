@@ -96,7 +96,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls https://raw.githubusercontents.com/wyx2685/V2bX-script/master/install.sh)
+    bash <(curl -Ls https://raw.githubusercontents.com/Fearless743/V2bX-script/master/install.sh)
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
@@ -112,7 +112,7 @@ update() {
     else
         version=$2
     fi
-    bash <(curl -Ls https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh) $version
+    bash <(curl -Ls https://raw.githubusercontent.comFearless743/V2bX-script/master/install.sh) $version
     if [[ $? == 0 ]]; then
         echo -e "${green}更新完成，已自动重启 V2bX，请使用 V2bX log 查看运行日志${plain}"
         exit
@@ -300,7 +300,7 @@ install_bbr() {
 }
 
 update_shell() {
-    wget -O /usr/bin/V2bX -N --no-check-certificate https://raw.githubusercontent.com/wyx2685/V2bX-script/master/V2bX.sh
+    wget -O /usr/bin/V2bX -N --no-check-certificate https://raw.githubusercontent.com/Fearless743/V2bX-script/master/V2bX.sh
     if [[ $? != 0 ]]; then
         echo ""
         echo -e "${red}下载脚本失败，请检查本机能否连接 Github${plain}"
@@ -468,6 +468,7 @@ add_node_config() {
         echo -e "${green}6. Trojan${plain}"  
         if [ "$core_sing" == true ]; then
             echo -e "${green}7. Tuic${plain}"
+            echo -e "${green}8. AnyTLS${plain}"
         fi
         read -rp "请输入：" NodeType
         case "$NodeType" in
@@ -478,6 +479,7 @@ add_node_config() {
             5 ) NodeType="hysteria2" ;;
             6 ) NodeType="trojan" ;;
             7 ) NodeType="tuic" ;;
+            8 ) NodeType="anytls" ;;
             * ) NodeType="shadowsocks" ;;
         esac
     fi
@@ -940,7 +942,7 @@ show_usage() {
 show_menu() {
     echo -e "
   ${green}V2bX 后端管理脚本，${plain}${red}不适用于docker${plain}
---- https://github.com/wyx2685/V2bX ---
+--- https://github.com/Fearless743/V2bX ---
   ${green}0.${plain} 修改配置
 ————————————————
   ${green}1.${plain} 安装 V2bX
