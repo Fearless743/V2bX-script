@@ -122,7 +122,7 @@ add_node_config() {
     if [ "$core_type" == "1" ]; then 
     node_config=$(cat <<EOF
 {
-            "PanelType": "$panel_type"
+            "PanelType": "$panel_type",
             "Core": "$core",
             "ApiHost": "$ApiHost",
             "ApiKey": "$ApiKey",
@@ -154,7 +154,7 @@ EOF
     elif [ "$core_type" == "2" ]; then
     node_config=$(cat <<EOF
 {
-            "PanelType": "$panel_type"
+            "PanelType": "$panel_type",
             "Core": "$core",
             "ApiHost": "$ApiHost",
             "ApiKey": "$ApiKey",
