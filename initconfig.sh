@@ -210,7 +210,7 @@ elif [ "$core_type" == "4" ]; then
             "NodeID": $NodeID,
             "NodeType": "$NodeType",
             "Timeout": 30,
-            "ListenIP": "",
+            "ListenIP": "$listen_ip",
             "SendIP": "0.0.0.0",
             "DeviceOnlineMinTraffic": 200,
             "MieruOptions": {
@@ -310,6 +310,17 @@ generate_config_file() {
         cores_config+="
     {
         \"Type\": \"hysteria2\",
+        \"Log\": {
+            \"Level\": \"error\"
+        }
+    },"
+    fi
+
+    # 检查并添加mieru核心配置
+    if [ "$core_mieru" = true ]; then
+        cores_config+="
+    {
+        \"Type\": \"mieru\",
         \"Log\": {
             \"Level\": \"error\"
         }
