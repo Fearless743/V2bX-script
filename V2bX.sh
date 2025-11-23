@@ -614,25 +614,25 @@ EOF
 EOF
 )
     elif [ "$core_type" == "4" ]; then
-        node_config=$(cat <<EOF
-    {
-                "Core": "$core",
-                "ApiHost": "$ApiHost",
-                "ApiKey": "$ApiKey",
-                "NodeID": $NodeID,
-                "NodeType": "$NodeType",
-                "Timeout": 30,
-                "ListenIP": "",
-                "SendIP": "0.0.0.0",
-                "DeviceOnlineMinTraffic": 200,
-                "MieruOptions": {
-                          "Protocols": ["tcp", "udp"],
-                          "MTU": 1400
-                        }
-
-            },
-    EOF
-    )
+    node_config=$(cat <<EOF
+{
+            "Core": "$core",
+            "ApiHost": "$ApiHost",
+            "ApiKey": "$ApiKey",
+            "NodeID": $NodeID,
+            "NodeType": "$NodeType",
+            "MieruConfigPath": "/etc/V2bX/mieruconfig.yaml",
+            "Timeout": 30,
+            "ListenIP": "",
+            "SendIP": "0.0.0.0",
+            "DeviceOnlineMinTraffic": 200,
+            "MieruOptions": {
+                      "Protocols": ["tcp", "udp"],
+                      "MTU": 1400
+                    }
+        },
+EOF
+)
     fi
     nodes_config+=("$node_config")
 }
