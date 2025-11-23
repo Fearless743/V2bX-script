@@ -497,7 +497,7 @@ add_node_config() {
         istls="y"
     fi
 
-    if [[ "$isreality" != "y" && "$isreality" != "Y" &&  "$istls" != "y" ]]; then
+    if [[ "$isreality" != "y" && "$isreality" != "Y" &&  "$istls" != "y" && "$core_mieru" != true ]]; then
         read -rp "请选择是否进行TLS配置？(y/n)" istls
     fi
 
