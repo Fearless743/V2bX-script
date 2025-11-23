@@ -11,18 +11,6 @@ check_ipv6_support() {
 }
 
 add_node_config() {
-    echo -e "${green}请选择面板类型：${plain}"
-    echo -e "${green}1. v2board${plain}"
-    echo -e "${green}2. ppanel${plain}"
-    read -rp "请输入：" core_type
-    if [ "$core_type" == "1" ]; then
-        panel_tupe="v2board"
-    elif [ "$core_type" == "2" ]; then
-        core="ppanel"
-    else
-        echo "无效的选择。请选择 1 2。"
-        continue
-    fi
     echo -e "${green}请选择节点核心类型：${plain}"
     echo -e "${green}1. xray${plain}"
     echo -e "${green}2. singbox${plain}"
@@ -128,7 +116,6 @@ add_node_config() {
     if [ "$core_type" == "1" ]; then
     node_config=$(cat <<EOF
 {
-            "PanelType": "$panel_type",
             "Core": "$core",
             "ApiHost": "$ApiHost",
             "ApiKey": "$ApiKey",
@@ -160,7 +147,6 @@ EOF
     elif [ "$core_type" == "2" ]; then
     node_config=$(cat <<EOF
 {
-            "PanelType": "$panel_type",
             "Core": "$core",
             "ApiHost": "$ApiHost",
             "ApiKey": "$ApiKey",
@@ -190,7 +176,6 @@ EOF
     elif [ "$core_type" == "3" ]; then
     node_config=$(cat <<EOF
 {
-            "PanelType": "$panel_type"
             "Core": "$core",
             "ApiHost": "$ApiHost",
             "ApiKey": "$ApiKey",
@@ -219,7 +204,6 @@ EOF
 elif [ "$core_type" == "4" ]; then
     node_config=$(cat <<EOF
 {
-            "PanelType": "$panel_type"
             "Core": "$core",
             "ApiHost": "$ApiHost",
             "ApiKey": "$ApiKey",
