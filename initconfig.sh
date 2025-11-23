@@ -27,6 +27,7 @@ add_node_config() {
     echo -e "${green}1. xray${plain}"
     echo -e "${green}2. singbox${plain}"
     echo -e "${green}3. hysteria2${plain}"
+    echo -e "${green}4. mieru${plain}"
     read -rp "请输入：" core_type
     if [ "$core_type" == "1" ]; then
         core="xray"
@@ -37,8 +38,11 @@ add_node_config() {
     elif [ "$core_type" == "3" ]; then
         core="hysteria2"
         core_hysteria2=true
+    elif [ "$core_type" == "4" ]; then
+        core="mieru"
+        core_mieru=true
     else
-        echo "无效的选择。请选择 1 2 3。"
+        echo "无效的选择。请选择 1 2 3 4。"
         continue
     fi
     while true; do
@@ -53,6 +57,8 @@ add_node_config() {
 
     if [ "$core_hysteria2" = true ] && [ "$core_xray" = false ] && [ "$core_sing" = false ]; then
         NodeType="hysteria2"
+    elif [ "$core_mieru" = true ] && [ "$core_xray" = false ] && [ "$core_sing" = false ]; then
+        NodeType="mieru"
     else
         echo -e "${yellow}请选择节点传输协议：${plain}"
         echo -e "${green}1. Shadowsocks${plain}"
@@ -65,7 +71,7 @@ add_node_config() {
         if [ "$core_hysteria2" == true ] && [ "$core_sing" = false ]; then
             echo -e "${green}5. Hysteria2${plain}"
         fi
-        echo -e "${green}6. Trojan${plain}"  
+        echo -e "${green}6. Trojan${plain}"
         if [ "$core_sing" == true ]; then
             echo -e "${green}7. Tuic${plain}"
             echo -e "${green}8. AnyTLS${plain}"
@@ -119,7 +125,7 @@ add_node_config() {
         listen_ip="::"
     fi
     node_config=""
-    if [ "$core_type" == "1" ]; then 
+    if [ "$core_type" == "1" ]; then
     node_config=$(cat <<EOF
 {
             "PanelType": "$panel_type",
@@ -210,6 +216,27 @@ EOF
         },
 EOF
 )
+elif [ "$core_type" == "4" ]; then
+    node_config=$(cat <<EOF
+{
+            "PanelType": "$panel_type"
+            "Core": "$core",
+            "ApiHost": "$ApiHost",
+            "ApiKey": "$ApiKey",
+            "NodeID": $NodeID,
+            "NodeType": "$NodeType",
+            "Timeout": 30,
+            "ListenIP": "",
+            "SendIP": "0.0.0.0",
+            "DeviceOnlineMinTraffic": 200,
+            "MieruOptions": {
+                      "Protocols": ["tcp", "udp"],
+                      "MTU": 1400
+                    }
+
+        },
+EOF
+)
     fi
     nodes_config+=("$node_config")
 }
@@ -226,15 +253,16 @@ generate_config_file() {
     if [[ "$continue_prompt" =~ ^[Nn][Oo]? ]]; then
         exit 0
     fi
-    
+
     nodes_config=()
     first_node=true
     core_xray=false
     core_sing=false
     core_hysteria2=false
+    core_mieru=false
     fixed_api_info=false
     check_api=false
-    
+
     while true; do
         if [ "$first_node" = true ]; then
             read -rp "请输入机场网址(https://example.com)：" ApiHost
@@ -310,7 +338,7 @@ generate_config_file() {
 
     # 切换到配置文件目录
     cd /etc/V2bX
-    
+
     # 备份旧的配置文件
     mv config.json config.json.bak
     nodes_config_str="${nodes_config[*]}"
@@ -327,7 +355,7 @@ generate_config_file() {
     "Nodes": [$formatted_nodes_config]
 }
 EOF
-    
+
     # 创建 custom_outbound.json 文件
     cat <<EOF > /etc/V2bX/custom_outbound.json
 [
@@ -351,7 +379,7 @@ EOF
     }
 ]
 EOF
-    
+
     # 创建 route.json 文件
     cat <<EOF > /etc/V2bX/route.json
 {
@@ -486,7 +514,7 @@ EOF
 }
 EOF
 
-    # 创建 hy2config.yaml 文件           
+    # 创建 hy2config.yaml 文件
     cat <<EOF > /etc/V2bX/hy2config.yaml
 quic:
   initStreamReceiveWindow: 8388608

@@ -465,7 +465,7 @@ add_node_config() {
         if [ "$core_hysteria2" == true ] && [ "$core_sing" = false ]; then
             echo -e "${green}5. Hysteria2${plain}"
         fi
-        echo -e "${green}6. Trojan${plain}"  
+        echo -e "${green}6. Trojan${plain}"
         if [ "$core_sing" == true ]; then
             echo -e "${green}7. Tuic${plain}"
             echo -e "${green}8. AnyTLS${plain}"
@@ -519,7 +519,7 @@ add_node_config() {
         listen_ip="::"
     fi
     node_config=""
-    if [ "$core_type" == "1" ]; then 
+    if [ "$core_type" == "1" ]; then
     node_config=$(cat <<EOF
 {
             "Core": "$core",
@@ -623,14 +623,14 @@ generate_config_file() {
     if [[ "$continue_prompt" =~ ^[Nn][Oo]? ]]; then
         exit 0
     fi
-    
+
     nodes_config=()
     first_node=true
     core_xray=false
     core_sing=false
     fixed_api_info=false
     check_api=false
-    
+
     while true; do
         if [ "$first_node" = true ]; then
             read -rp "请输入机场网址(https://example.com)：" ApiHost
@@ -706,7 +706,7 @@ generate_config_file() {
 
     # 切换到配置文件目录
     cd /etc/V2bX
-    
+
     # 备份旧的配置文件
     mv config.json config.json.bak
     nodes_config_str="${nodes_config[*]}"
@@ -723,7 +723,7 @@ generate_config_file() {
     "Nodes": [$formatted_nodes_config]
 }
 EOF
-    
+
     # 创建 custom_outbound.json 文件
     cat <<EOF > /etc/V2bX/custom_outbound.json
     [
@@ -747,7 +747,7 @@ EOF
         }
     ]
 EOF
-    
+
     # 创建 route.json 文件
     cat <<EOF > /etc/V2bX/route.json
     {
@@ -810,7 +810,7 @@ EOF
     }
 EOF
 
-    # 创建 sing_origin.json 文件           
+    # 创建 sing_origin.json 文件
     cat <<EOF > /etc/V2bX/sing_origin.json
 {
   "outbounds": [
@@ -873,7 +873,7 @@ EOF
 }
 EOF
 
-    # 创建 hy2config.yaml 文件           
+    # 创建 hy2config.yaml 文件
     cat <<EOF > /etc/V2bX/hy2config.yaml
 quic:
   initStreamReceiveWindow: 8388608
